@@ -1,12 +1,14 @@
 # encoding: UTF-8
-#require "observables"
 module MongoMapper
   module Plugins
     module Dirtier
+
+      def self.included(model)
+        model.plugin MongoMapper::Plugins::Dirtier
+      end
+
       def self.configure(model)
-        model.class_eval do
-          plugin MongoMapper::Plugins::Dirty unless plugins.include?(MongoMapper::Plugins::Dirty)
-        end
+         model.plugin MongoMapper::Plugins::Dirty unless model.plugins.include?(MongoMapper::Plugins::Dirty)
       end
 
       module InstanceMethods

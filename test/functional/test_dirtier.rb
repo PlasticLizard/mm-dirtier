@@ -3,7 +3,6 @@ require 'test_helper'
 class DirtierTest < Test::Unit::TestCase
   def setup
     @document = Doc { key :ary, Array }
-    @document.plugin(MongoMapper::Plugins::Dirtier)
   end
 
   context "marking changes on observable keys" do

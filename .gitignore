@@ -22,3 +22,9 @@ pkg
 
 idea/*
 .idea/*
+
+Gemfile.lock
+
+log/*
+
+*.log
