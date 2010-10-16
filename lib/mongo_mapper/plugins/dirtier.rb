@@ -8,12 +8,37 @@ module MongoMapper
       end
 
       def self.configure(model)
-         model.plugin MongoMapper::Plugins::Dirty unless model.plugins.include?(MongoMapper::Plugins::Dirty)
+        model.plugin MongoMapper::Plugins::Dirty unless
+          model.plugins.include?(MongoMapper::Plugins::Dirty)
       end
 
       module InstanceMethods
 
+        protected
+
+        def attribute_method?(attr)
+          #Since associations are storing their changes in the models
+          # normal dirty tracking system, then association names are
+          # valid attributes as far as dirty is concerned
+          super || !!associations.keys.detect { |a| a.to_s == attr.to_s }
+        end
+
         private
+
+        def get_proxy(association)
+          #I can't imagine why, but super.tap{...} is causing errors here.
+          #Proxy meta monkey wierdness, no doubt.
+          proxy = super
+          key_name = proxy_key_name(proxy)
+          unless association.observable?
+            observe_if_observable(key_name,proxy)
+          end
+          return proxy
+        end
+
+        def proxy_key_name(proxy)
+          proxy.options[:in] ? proxy.options[:in] : proxy.association.name
+        end
 
         def write_key(key, value)
           old_value = read_key(key)
@@ -22,8 +47,14 @@ module MongoMapper
           super(key,value)
         end
 
+        def value_changed?(key_name, old, value)
+          value = nil if keys[key_name] && keys[key_name].number? && value.blank?
+          old != value
+        end
+
         def observe_if_observable(key, value)
           key = key.to_s
+
           if value.observable? || value.can_be_observable?
 
             value.make_observable unless value.observable?
@@ -35,7 +66,6 @@ module MongoMapper
               else
                 changed_attributes.delete(key) unless value_changed?(key,previous_values,args.current_values)
               end
-
             end
           end
         end
