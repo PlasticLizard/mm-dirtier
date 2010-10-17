@@ -28,3 +28,5 @@ Gemfile.lock
 log/*
 
 *.log
+
+*.gem
