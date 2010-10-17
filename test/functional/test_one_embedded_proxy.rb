@@ -57,6 +57,12 @@ class OneEmbeddedProxyTest < Test::Unit::TestCase
       doc.child_changed?.should be_false
     end
 
-
+    should "ignore in place changes to child attributes" do
+      doc = @document.new
+      child = doc.child.build
+      doc.save!
+      doc.child.name = "hi there"
+      doc.child_changed?.should be_false
+    end
   end
 end

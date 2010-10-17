@@ -1,10 +1,10 @@
 # encoding: UTF-8
-module MongoMapper
+module MmDirtier
   module Plugins
     module Dirtier
 
       def self.included(model)
-        model.plugin MongoMapper::Plugins::Dirtier
+        model.plugin MmDirtier::Plugins::Dirtier
       end
 
       def self.configure(model)
