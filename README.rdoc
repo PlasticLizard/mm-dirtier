@@ -16,8 +16,8 @@ when your app is initialized. mm-dirtier will take care of plugging itself into 
 
 == Usage
 
-mm-dirtier was created to serve a single purpose: to enable persisting changes (instead of the full document) for MongoMapper documents by way of MongoDB's atomic operators.
-Whether or not the deep dirty tracking mm-dirtier provides has any use beyond that, I have no idea. For that reason, I will simply provide a basic sample of plugin usage in this readme. If anyone conceives of a use for this beyond document persistence and wants to know more, add an issue to the tracker stating as much and I'll expand the documentation.
+mm-dirtier was created to serve a single purpose: to enable MongoMapper to automatically persist changes to documents via MongoDB's atomic opererators.
+Whether or not the deep dirty tracking mm-dirtier provides has any use beyond that, I have no idea. For that reason I will simply provide a basic sample of plugin usage in this readme. If anyone conceives of a use for this plugin beyond document persistence and wants to know more, add an issue to the tracker stating as much and I'll expand the documentation.
 
 === Example:
 
