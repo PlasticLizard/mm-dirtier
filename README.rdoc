@@ -1,10 +1,10 @@
- = mm-dirtier
+= mm-dirtier
 
- mm-dirtier is a MongoMapper plugin that extends dirty tracking to the entire object graph. The default dirty tracking implementation in MongoMapper will only track dirty attributes for top level documents, and does not detect changes to hash or array keys. mm-dirtier, which currently only works with the Rails3 branch of MongoMapper, will record changes throughout your entire document hierarchy, including in place modifications to embedded array and hash keys.
+mm-dirtier is a MongoMapper plugin that extends dirty tracking to the entire object graph. The default dirty tracking implementation in MongoMapper will only track dirty attributes for top level documents, and does not detect changes to hash or array keys. mm-dirtier, which currently only works with the Rails3 branch of MongoMapper, will record changes throughout your entire document hierarchy, including in place modifications to embedded array and hash keys.
 
- == Installation
+== Installation
 
- mm-dirtier is available as a RubyGem:
+mm-dirtier is available as a RubyGem:
 
      gem install mm_dirtier
 
@@ -14,14 +14,14 @@ To activate the plugin, add 'mm_dirtier' to your gemfile and
 
 when your app is initialized. mm-dirtier will take care of plugging itself into MongoMapper::Document and MongoMapper::EmbeddedDocument.
 
- == Usage
+== Usage
 
- mm-dirtier was created to serve a single purpose - enable persisting only changes to MongoMapper documents using MongoDB's atomic operators.
+mm-dirtier was created to serve a single purpose - enable persisting only changes to MongoMapper documents using MongoDB's atomic operators.
  Whether or not the deep dirty tracking mm-dirtier provides has any use beyond that, I have no idea. For that reason, I will only briefly discuss
  usage of the plugin. If anyone conceives of a use for this beyond document persistence and wants to know more, add an issue to the tracker stating
  as much and I'll expand the documentation.
 
- === Example:
+=== Example:
 
      class Procedure
        include MongoMapper::EmbeddedDocument
@@ -87,7 +87,7 @@ when your app is initialized. mm-dirtier will take care of plugging itself into 
 
 
 
- == Note on Patches/Pull Requests
+== Note on Patches/Pull Requests
 
  * Fork the project.
  * Make your feature addition or bug fix.
@@ -97,6 +97,6 @@ when your app is initialized. mm-dirtier will take care of plugging itself into 
    (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
  * Send me a pull request. Bonus points for topic branches.
 
- == Copyright
+== Copyright
 
  Copyright (c) 1776 Nathan Stults. See LICENSE for details.
