@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.files = Dir.glob("{lib,mongo_mapper,test}/**/*") + %w[LICENSE README.rdoc]
 
- s.add_dependency  'observables', '~> 0.1.1'
+# s.add_dependency  'observables', '~> 0.1.1'
   #s.add_dependency 'activemodel',             '~> 3.0.0'
   #s.add_dependency 'activesupport',           '~> 3.0.0'
   #s.add_dependency 'plucky',                  '~> 0.3.5'

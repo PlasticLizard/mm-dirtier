@@ -14,6 +14,12 @@ module MongoMapper
         end
       end
 
+      class OneEmbeddedProxy
+        def make_observable
+          class << self; include MmDirtier::OneEmbeddedProxyListener;end unless observable?
+        end
+      end
+
     end
   end
 end

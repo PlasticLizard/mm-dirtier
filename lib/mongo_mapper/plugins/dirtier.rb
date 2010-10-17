@@ -52,6 +52,7 @@ module MongoMapper
           old != value
         end
 
+
         def observe_if_observable(key, value)
           key = key.to_s
 
@@ -61,7 +62,9 @@ module MongoMapper
             previous_values = nil
             value.set_observer do |_,change_type,args|
               if change_type.to_s =~ /before/
-                previous_values = attribute_was(key).dup
+                previous_values = attribute_was(key)
+                #previous_values = previous_values.nil? ? nil : previous_values.dup
+                previous_values = dup_if_required(previous_values)
                 attribute_will_change!(key) unless attribute_changed?(key)
               else
                 changed_attributes.delete(key) unless value_changed?(key,previous_values,args.current_values)
@@ -69,6 +72,11 @@ module MongoMapper
             end
           end
         end
+
+        def dup_if_required(val)
+          val.nil? || val.respond_to?(:_id) ? val : val.dup
+        end
+
       end
     end
   end
