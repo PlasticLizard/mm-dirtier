@@ -46,7 +46,7 @@ Whether or not the deep dirty tracking mm-dirtier provides has any use beyond th
        many :diagnoses, :in => :diagnosis_ids
      end
 
-     p = Patient.new :name=>"Nathan Stults"
+     p = Patient.new
      p.changed? => false
      p.nicknames << "Col. Easy Andy"
      p.changed? => true
