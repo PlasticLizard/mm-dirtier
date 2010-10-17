@@ -46,7 +46,7 @@ Whether or not the deep dirty tracking mm-dirtier provides has any use beyond th
        many :diagnoses, :in => :diagnosis_ids
      end
 
-     p = Patient.new
+     p = Patient.create :name=>"Nathan Stults"
      p.changed? => false
      p.nicknames << "Col. Easy Andy"
      p.changed? => true
@@ -61,7 +61,7 @@ Whether or not the deep dirty tracking mm-dirtier provides has any use beyond th
      p.procedure_changed? => true
      p.procedure_change => [nil,<Class ...>]
      p.procedure.changed? => true
-     p.procedure.name.changed? => true
+     p.procedure.name_changed? => true
 
      p.procedures.build(:name=>"Labotomy")
      p.procedures_changed? => true
