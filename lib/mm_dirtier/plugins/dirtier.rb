@@ -4,12 +4,13 @@ module MmDirtier
     module Dirtier
 
       def self.included(model)
+        model.plugin MongoMapper::Plugins::Dirty unless
+          model.plugins.include?(MongoMapper::Plugins::Dirty)
         model.plugin MmDirtier::Plugins::Dirtier
       end
 
       def self.configure(model)
-        model.plugin MongoMapper::Plugins::Dirty unless
-          model.plugins.include?(MongoMapper::Plugins::Dirty)
+
       end
 
       module InstanceMethods

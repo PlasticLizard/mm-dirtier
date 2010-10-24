@@ -2,13 +2,17 @@ require 'test_helper'
 
 class OneEmbeddedProxyTest < Test::Unit::TestCase
   def setup
-    @document = Doc { key :ary, Array }
+    @document = Doc("Doc") { key :ary, Array }
   end
 
   context "marking changes on one embedded  proxies" do
     setup do
-      @child = EDoc { key :name, String }
+      @child = EDoc("Child") { key :name, String }
+      @child.plugin MongoMapper::Plugins::Dirty
+      @child.plugin MmDirtier::Plugins::Dirtier
       @document.one :child, :class=>@child
+      @child.one :grandchild, :class=>@child
+
     end
 
     should "not happen if there are none" do
@@ -36,7 +40,7 @@ class OneEmbeddedProxyTest < Test::Unit::TestCase
       doc.child_changed?.should be_false
     end
 
-    should "detect when a collection is set to nil" do
+    should "detect when a child is set to nil" do
       doc = @document.new
       c = doc.child.build
       doc.save!
@@ -63,6 +67,19 @@ class OneEmbeddedProxyTest < Test::Unit::TestCase
       doc.save!
       doc.child.name = "hi there"
       doc.child_changed?.should be_false
+    end
+
+    should "detect deletion on a nested embedded one" do
+      doc = @document.new
+      child = doc.child.build
+      grandchild = child.grandchild.build
+      doc.save!
+      child.name = "tada"
+      child.grandchild = nil
+      child.grandchild_changed?.should be_true
+      change = child.grandchild_change
+      change[0].should == grandchild
+      change[1].should be_nil
     end
   end
 end
