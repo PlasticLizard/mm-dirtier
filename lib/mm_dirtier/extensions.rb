@@ -38,6 +38,12 @@ module MongoMapper
         end
       end
 
+      class ManyDocumentsProxy
+        def save_to_collection(options={})
+          @target.each { |doc| doc.save(options) if doc.changed? } if @target
+        end
+      end
+
     end
   end
 end
