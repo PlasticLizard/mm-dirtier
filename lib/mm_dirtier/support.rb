@@ -40,9 +40,9 @@ class Hash
   def make_indifferent!
     return self if defined?(@is_indifferent) && @is_indifferent
 
+    @is_indifferent = true
     stringify_keys!
     extend IndifferentAccess
-    @is_indifferent = true
 
     self
   end
