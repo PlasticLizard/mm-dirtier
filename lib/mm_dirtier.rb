@@ -9,7 +9,8 @@ base_dir = File.dirname(__FILE__)
  'in_array_proxy_listener',
  'one_embedded_proxy_listener',
  'extensions',
- 'plugins/dirtier'
+ 'plugins/dirtier',
+ 'support'
 ].each {|req| require File.join(base_dir,'mm_dirtier',req)}
 
 

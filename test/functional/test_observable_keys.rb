@@ -2,11 +2,11 @@
 require 'test_helper'
 
 class ObservableKeysTest < Test::Unit::TestCase
-  def setup
-    @document = Doc { key :ary, Array }
-  end
+  context "marking changes on observable array keys" do
+    setup do
+      @document = Doc { key :ary, Array }
+    end
 
-  context "marking changes on observable keys" do
     should "not happen if there are none" do
       doc = @document.new
       doc.ary_changed?.should be_false
@@ -53,6 +53,29 @@ class ObservableKeysTest < Test::Unit::TestCase
       a2.unshift("hi there")
       doc.ary_changed?.should be_true
     end
+  end
 
+  context "marking changes on observable hash keys" do
+    setup do
+      @document = Doc { key :hash, Hash }
+    end
+
+    should "happen when change happens" do
+      doc = @document.new
+      doc.hash = {"Golly" => "Gee", "Willikers" => "Batman"}
+      doc.hash_changed?.should be_true
+      doc.hash_was.should == {}
+      doc.hash_change.should == [{}, {"Golly" => "Gee", "Willikers" => "Batman"}]
+    end
+
+    should "happen when modified in place" do
+      doc = @document.new
+      doc.hash = {"Golly" => "Gee", "Willikers" => "Batman"}
+      doc.save!
+      doc.hash["Willikers"] = "Robin"
+      doc.hash_changed?.should be_true
+      doc.hash_was.should == {"Golly" => "Gee", "Willikers" => "Batman"}
+      doc.hash_change.should == [{"Golly" => "Gee", "Willikers" => "Batman"},{"Golly" => "Gee", "Willikers" => "Robin"}]
+    end
   end
 end
