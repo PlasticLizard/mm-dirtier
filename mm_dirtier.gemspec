@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.files = Dir.glob("{lib,mongo_mapper,test}/**/*") + %w[LICENSE README.rdoc]
 
-  s.add_dependency  'observables', '~> 0.1.2'
+  s.add_dependency  'observables', '~> 0.1.3'
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'log_buddy'
